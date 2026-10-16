@@ -3,10 +3,12 @@
 import { useState } from "react"
 import { products, reviews, type Product } from "@/lib/catalog"
 import { useCart, formatBDT } from "@/lib/cart-store"
+import { useToast } from "@/hooks/use-toast"
 import { ShoppingBag, Eye, Star } from "lucide-react"
 
 function ProductCard({ p }: { p: Product }) {
-  const { addItem } = useCart()
+  const { addItem, openQuickView } = useCart()
+  const { toast } = useToast()
   const [added, setAdded] = useState(false)
 
   const discount = p.oldPrice
@@ -16,8 +18,14 @@ function ProductCard({ p }: { p: Product }) {
   const handleAdd = () => {
     addItem(p)
     setAdded(true)
+    toast({
+      title: "Added to cart",
+      description: `${p.brand} - ${formatBDT(p.price)}`,
+    })
     setTimeout(() => setAdded(false), 1500)
   }
+
+  const handleQuickView = () => openQuickView(p)
 
   return (
     <div className="group bg-white rounded-2xl border border-neutral-200 overflow-hidden hover:shadow-xl transition-all duration-300 flex flex-col">
@@ -37,12 +45,15 @@ function ProductCard({ p }: { p: Product }) {
             HOT
           </span>
         )}
-        <img
-          src={p.image}
-          alt={p.name}
-          className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-        />
+        <button onClick={handleQuickView} className="block w-full h-full" aria-label={`View ${p.name}`}>
+          <img
+            src={p.image}
+            alt={p.name}
+            className="absolute inset-0 w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+          />
+        </button>
         <button
+          onClick={handleQuickView}
           className="absolute bottom-3 right-3 h-10 w-10 rounded-full bg-white/90 hover:bg-red-600 hover:text-white text-black flex items-center justify-center opacity-0 group-hover:opacity-100 transition-all shadow-md"
           aria-label="Quick view"
         >
@@ -55,9 +66,12 @@ function ProductCard({ p }: { p: Product }) {
           {p.brand}
         </p>
         <h3 className="text-sm text-neutral-800 leading-snug mb-3 line-clamp-2 flex-1">
-          <a href="#" className="hover:text-red-600 transition-colors">
+          <button
+            onClick={handleQuickView}
+            className="hover:text-red-600 transition-colors text-left"
+          >
             {p.name}
-          </a>
+          </button>
         </h3>
         <div className="flex items-baseline gap-2 mb-3">
           <span className="text-lg font-black text-black">
@@ -96,8 +110,9 @@ export function ProductSection({
   subtitle?: string
   products: Product[]
 }) {
+  const { toast } = useToast()
   return (
-    <section id={id} className="bg-white py-12 md:py-16">
+    <section id={id} className="bg-white py-12 md:py-16 scroll-mt-32">
       <div className="mx-auto max-w-7xl px-4">
         <div className="flex items-end justify-between mb-8">
           <div>
@@ -108,12 +123,17 @@ export function ProductSection({
               <p className="text-neutral-600 text-sm md:text-base">{subtitle}</p>
             )}
           </div>
-          <a
-            href="#"
+          <button
+            onClick={() =>
+              toast({
+                title: `Browsing all ${title}`,
+                description: `Showing all available ${title.toLowerCase()} products below.`,
+              })
+            }
             className="hidden md:inline-flex items-center gap-1 text-sm font-semibold text-red-600 hover:text-red-700"
           >
             View All →
-          </a>
+          </button>
         </div>
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
           {list.map((p) => (
@@ -127,7 +147,7 @@ export function ProductSection({
 
 export function ReviewsSection() {
   return (
-    <section className="bg-neutral-900 py-12 md:py-16">
+    <section className="bg-neutral-900 py-12 md:py-16 scroll-mt-32">
       <div className="mx-auto max-w-7xl px-4">
         <div className="text-center mb-8 md:mb-10">
           <h2 className="text-2xl md:text-3xl font-black text-white mb-2">

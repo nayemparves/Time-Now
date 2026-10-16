@@ -14,6 +14,10 @@ type CartState = {
   isCartOpen: boolean
   isMenuOpen: boolean
   isSearchOpen: boolean
+  isCheckoutOpen: boolean
+  isLoginOpen: boolean
+  isTrackOpen: boolean
+  quickViewProduct: Product | null
   addItem: (product: Product) => void
   removeItem: (id: string) => void
   updateQuantity: (id: string, qty: number) => void
@@ -24,6 +28,14 @@ type CartState = {
   closeMenu: () => void
   openSearch: () => void
   closeSearch: () => void
+  openCheckout: () => void
+  closeCheckout: () => void
+  openLogin: () => void
+  closeLogin: () => void
+  openTrack: () => void
+  closeTrack: () => void
+  openQuickView: (product: Product) => void
+  closeQuickView: () => void
 }
 
 export const useCart = create<CartState>()(
@@ -33,6 +45,10 @@ export const useCart = create<CartState>()(
       isCartOpen: false,
       isMenuOpen: false,
       isSearchOpen: false,
+      isCheckoutOpen: false,
+      isLoginOpen: false,
+      isTrackOpen: false,
+      quickViewProduct: null,
       addItem: (product) =>
         set((state) => {
           const existing = state.items.find((i) => i.product.id === product.id)
@@ -63,6 +79,14 @@ export const useCart = create<CartState>()(
       closeMenu: () => set({ isMenuOpen: false }),
       openSearch: () => set({ isSearchOpen: true }),
       closeSearch: () => set({ isSearchOpen: false }),
+      openCheckout: () => set({ isCheckoutOpen: true, isCartOpen: false }),
+      closeCheckout: () => set({ isCheckoutOpen: false }),
+      openLogin: () => set({ isLoginOpen: true }),
+      closeLogin: () => set({ isLoginOpen: false }),
+      openTrack: () => set({ isTrackOpen: true }),
+      closeTrack: () => set({ isTrackOpen: false }),
+      openQuickView: (product) => set({ quickViewProduct: product }),
+      closeQuickView: () => set({ quickViewProduct: null }),
     }),
     {
       name: "timenow-cart",

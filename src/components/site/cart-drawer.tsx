@@ -1,6 +1,7 @@
 'use client'
 
 import { useCart, formatBDT } from "@/lib/cart-store"
+import { useToast } from "@/hooks/use-toast"
 import {
   X,
   ShoppingBag,
@@ -16,7 +17,9 @@ export function CartDrawer() {
     items,
     removeItem,
     updateQuantity,
+    openCheckout,
   } = useCart()
+  const { toast } = useToast()
 
   const subtotal = items.reduce((s, i) => s + i.product.price * i.quantity, 0)
 
@@ -138,12 +141,30 @@ export function CartDrawer() {
               </p>
               <div className="grid grid-cols-2 gap-2">
                 <button
-                  onClick={closeCart}
+                  onClick={() => {
+                    closeCart()
+                    toast({
+                      title: "Cart preview",
+                      description: `${items.length} item(s) in your cart - subtotal ${formatBDT(subtotal)}`,
+                    })
+                  }}
                   className="h-11 rounded-full border border-neutral-300 font-semibold text-sm hover:bg-neutral-50"
                 >
                   View Cart
                 </button>
-                <button className="h-11 rounded-full bg-red-600 hover:bg-red-700 text-white font-semibold text-sm transition-colors">
+                <button
+                  onClick={() => {
+                    if (items.length === 0) {
+                      toast({
+                        title: "Cart is empty",
+                        description: "Add some products before checkout.",
+                      })
+                      return
+                    }
+                    openCheckout()
+                  }}
+                  className="h-11 rounded-full bg-red-600 hover:bg-red-700 text-white font-semibold text-sm transition-colors"
+                >
                   Checkout
                 </button>
               </div>

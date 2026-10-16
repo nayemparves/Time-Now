@@ -10,6 +10,9 @@ import {
   Twitter,
   Send,
 } from "lucide-react"
+import { useCart } from "@/lib/cart-store"
+import { useToast } from "@/hooks/use-toast"
+import { useState } from "react"
 
 const quickLinks = [
   "About Us",
@@ -27,7 +30,42 @@ const accountLinks = [
   "Return and Warranty Policy",
 ]
 
+const socials = [
+  { Icon: Facebook, name: "Facebook" },
+  { Icon: Instagram, name: "Instagram" },
+  { Icon: Youtube, name: "YouTube" },
+  { Icon: Twitter, name: "Twitter" },
+]
+
 export function Footer() {
+  const { openLogin, openTrack } = useCart()
+  const { toast } = useToast()
+  const [email, setEmail] = useState("")
+
+  const handleSubscribe = (e: React.FormEvent) => {
+    e.preventDefault()
+    if (!email.trim()) return
+    toast({
+      title: "Subscribed successfully!",
+      description: `You'll receive updates at ${email}`,
+    })
+    setEmail("")
+  }
+
+  const handleLink = (name: string) => {
+    toast({
+      title: name,
+      description: `${name} page is coming soon. Contact us at 01934-764333 for any queries.`,
+    })
+  }
+
+  const handleSocial = (name: string) => {
+    toast({
+      title: `Follow us on ${name}`,
+      description: `Connect with Time Now on ${name} for latest updates.`,
+    })
+  }
+
   return (
     <footer className="bg-black text-white">
       {/* Newsletter */}
@@ -41,10 +79,12 @@ export function Footer() {
               Get the latest updates on new arrivals, special offers and exclusive deals.
             </p>
           </div>
-          <form className="flex gap-2" onSubmit={(e) => e.preventDefault()}>
+          <form className="flex gap-2" onSubmit={handleSubscribe}>
             <input
               type="email"
               required
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               placeholder="Enter your email address"
               className="flex-1 h-12 px-4 rounded-full bg-white/10 border border-white/20 text-white placeholder:text-white/40 text-sm focus:outline-none focus:border-red-500"
             />
@@ -77,15 +117,15 @@ export function Footer() {
             fair prices, ensuring customer satisfaction with every purchase.
           </p>
           <div className="flex gap-2 mt-5">
-            {[Facebook, Instagram, Youtube, Twitter].map((Icon, i) => (
-              <a
-                key={i}
-                href="#"
+            {socials.map(({ Icon, name }) => (
+              <button
+                key={name}
+                onClick={() => handleSocial(name)}
                 className="h-9 w-9 rounded-full bg-white/10 hover:bg-red-600 flex items-center justify-center transition-colors"
-                aria-label="Social link"
+                aria-label={`Follow on ${name}`}
               >
                 <Icon className="h-4 w-4" />
-              </a>
+              </button>
             ))}
           </div>
         </div>
@@ -124,9 +164,12 @@ export function Footer() {
           <ul className="space-y-2.5 text-sm">
             {quickLinks.map((l) => (
               <li key={l}>
-                <a href="#" className="text-white/70 hover:text-red-400 transition-colors">
+                <button
+                  onClick={() => handleLink(l)}
+                  className="text-white/70 hover:text-red-400 transition-colors text-left"
+                >
                   {l}
-                </a>
+                </button>
               </li>
             ))}
           </ul>
@@ -137,11 +180,30 @@ export function Footer() {
             Account
           </h4>
           <ul className="space-y-2.5 text-sm">
-            {accountLinks.map((l) => (
+            <li>
+              <button
+                onClick={openLogin}
+                className="text-white/70 hover:text-red-400 transition-colors text-left"
+              >
+                My Account
+              </button>
+            </li>
+            <li>
+              <button
+                onClick={openTrack}
+                className="text-white/70 hover:text-red-400 transition-colors text-left"
+              >
+                Orders Tracking
+              </button>
+            </li>
+            {accountLinks.slice(2).map((l) => (
               <li key={l}>
-                <a href="#" className="text-white/70 hover:text-red-400 transition-colors">
+                <button
+                  onClick={() => handleLink(l)}
+                  className="text-white/70 hover:text-red-400 transition-colors text-left"
+                >
                   {l}
-                </a>
+                </button>
               </li>
             ))}
           </ul>

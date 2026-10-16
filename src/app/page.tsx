@@ -8,6 +8,11 @@ import {
 import { Footer } from "@/components/site/footer"
 import { CartDrawer } from "@/components/site/cart-drawer"
 import { MobileMenu } from "@/components/site/mobile-menu"
+import { QuickViewModal } from "@/components/site/quick-view-modal"
+import { SearchModal } from "@/components/site/search-modal"
+import { CheckoutModal } from "@/components/site/checkout-modal"
+import { LoginModal } from "@/components/site/login-modal"
+import { TrackOrderModal } from "@/components/site/track-order-modal"
 import { products } from "@/lib/catalog"
 
 export default function Home() {
@@ -78,7 +83,9 @@ export default function Home() {
           products={gifts}
         />
 
-        <ReviewsSection />
+        <div id="reviews">
+          <ReviewsSection />
+        </div>
 
         <ProductSection
           id="sale"
@@ -91,6 +98,11 @@ export default function Home() {
 
       <CartDrawer />
       <MobileMenu />
+      <QuickViewModal />
+      <SearchModal />
+      <CheckoutModal />
+      <LoginModal />
+      <TrackOrderModal />
     </div>
   )
 }

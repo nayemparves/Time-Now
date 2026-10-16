@@ -30,7 +30,7 @@ const slides = [
     subtitle: "Limited Time Offer - Shop Now",
     cta: "View Hot Deals",
     href: "#hot",
-    image: "https://images.unsplash.com/photo-1495856458527-329ab0ef2d1f?w=1400&q=80",
+    image: "https://images.unsplash.com/photo-1551816230-ef5deaed4a26?w=1400&q=80",
   },
 ]
 

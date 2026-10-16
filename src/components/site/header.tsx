@@ -3,6 +3,7 @@
 import { useState } from "react"
 import { useCart } from "@/lib/cart-store"
 import { megaMenuData } from "@/lib/catalog"
+import { useToast } from "@/hooks/use-toast"
 import {
   ChevronDown,
   Search,
@@ -15,14 +16,18 @@ import {
 } from "lucide-react"
 
 export function TopBar() {
+  const { openLogin, openTrack } = useCart()
   return (
     <div className="bg-black text-white text-xs">
       <div className="mx-auto max-w-7xl px-4 flex items-center justify-between h-9">
         <div className="flex items-center gap-4">
-          <a href="#" className="flex items-center gap-1 hover:text-red-400 transition-colors">
+          <button
+            onClick={openTrack}
+            className="flex items-center gap-1 hover:text-red-400 transition-colors"
+          >
             <Truck className="h-3.5 w-3.5" />
             <span>Track My Order</span>
-          </a>
+          </button>
         </div>
         <div className="hidden md:flex items-center gap-5">
           <a href="mailto:info@timenowbd.com" className="flex items-center gap-1 hover:text-red-400 transition-colors">
@@ -34,17 +39,21 @@ export function TopBar() {
             <span>01934-764333</span>
           </a>
         </div>
-        <a href="#" className="flex items-center gap-1 hover:text-red-400 transition-colors">
+        <button
+          onClick={openLogin}
+          className="flex items-center gap-1 hover:text-red-400 transition-colors"
+        >
           <User className="h-3.5 w-3.5" />
           <span>Login / SignUp</span>
-        </a>
+        </button>
       </div>
     </div>
   )
 }
 
 export function Header() {
-  const { openCart, openMenu, items } = useCart()
+  const { openCart, openMenu, items, openSearch, openLogin } = useCart()
+  const { toast } = useToast()
   const [hovered, setHovered] = useState<string | null>(null)
   const totalQty = items.reduce((s, i) => s + i.quantity, 0)
 
@@ -55,6 +64,15 @@ export function Header() {
     { key: "accessories", label: "Accessories", items: megaMenuData.accessories.items },
     { key: "gifts", label: "Gifts", items: megaMenuData.gifts.items },
   ]
+
+  const handleBrandClick = (e: React.MouseEvent, brand: string) => {
+    e.preventDefault()
+    toast({
+      title: `${brand} Collection`,
+      description: `Showing all ${brand} watches in this category.`,
+    })
+    document.getElementById("men")?.scrollIntoView({ behavior: "smooth" })
+  }
 
   return (
     <header className="sticky top-0 z-40 bg-white shadow-sm">
@@ -88,9 +106,15 @@ export function Header() {
               <input
                 type="text"
                 placeholder="Search for watches, brands..."
-                className="w-full h-11 pl-4 pr-12 border border-neutral-300 rounded-full text-sm focus:outline-none focus:border-black focus:ring-1 focus:ring-black"
+                onFocus={openSearch}
+                readOnly
+                className="w-full h-11 pl-4 pr-12 border border-neutral-300 rounded-full text-sm focus:outline-none focus:border-black cursor-pointer"
               />
-              <button className="absolute right-0 top-0 h-11 w-11 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-colors">
+              <button
+                onClick={openSearch}
+                className="absolute right-0 top-0 h-11 w-11 bg-red-600 hover:bg-red-700 text-white rounded-full flex items-center justify-center transition-colors"
+                aria-label="Search"
+              >
                 <Search className="h-4 w-4" />
               </button>
             </div>
@@ -113,14 +137,13 @@ export function Header() {
         </div>
 
         <div className="md:hidden px-4 pb-3">
-          <div className="relative">
-            <input
-              type="text"
-              placeholder="Search for watches, brands..."
-              className="w-full h-10 pl-4 pr-10 border border-neutral-300 rounded-full text-sm focus:outline-none focus:border-black"
-            />
-            <Search className="absolute right-3 top-1/2 -translate-y-1/2 h-4 w-4 text-neutral-400" />
-          </div>
+          <button
+            onClick={openSearch}
+            className="w-full h-10 pl-4 pr-10 border border-neutral-300 rounded-full text-sm text-neutral-400 text-left flex items-center"
+          >
+            <Search className="h-4 w-4 mr-2" />
+            Search watches, brands...
+          </button>
         </div>
       </div>
 
@@ -147,6 +170,7 @@ export function Header() {
                       <a
                         key={sub}
                         href={`#${item.key}`}
+                        onClick={(e) => handleBrandClick(e, sub)}
                         className="px-4 py-2 text-sm text-neutral-700 hover:bg-neutral-50 hover:text-red-600 transition-colors"
                       >
                         {sub}

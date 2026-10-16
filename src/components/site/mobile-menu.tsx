@@ -2,6 +2,7 @@
 
 import { useCart } from "@/lib/cart-store"
 import { megaMenuData, brands } from "@/lib/catalog"
+import { useToast } from "@/hooks/use-toast"
 import {
   X,
   ChevronDown,
@@ -13,7 +14,8 @@ import {
 import { useState } from "react"
 
 export function MobileMenu() {
-  const { isMenuOpen, closeMenu } = useCart()
+  const { isMenuOpen, closeMenu, openLogin, openTrack, openSearch } = useCart()
+  const { toast } = useToast()
   const [openSection, setOpenSection] = useState<string | null>("men")
 
   const sections = [
@@ -23,6 +25,32 @@ export function MobileMenu() {
     { key: "accessories", label: "Accessories", items: megaMenuData.accessories.items },
     { key: "gifts", label: "Gifts", items: megaMenuData.gifts.items },
   ]
+
+  const handleBrandClick = (brand: string, sectionKey: string) => {
+    closeMenu()
+    toast({
+      title: `${brand} Collection`,
+      description: `Showing ${brand} watches in this category.`,
+    })
+    setTimeout(() => {
+      document.getElementById(sectionKey)?.scrollIntoView({ behavior: "smooth" })
+    }, 200)
+  }
+
+  const handleSearch = () => {
+    closeMenu()
+    setTimeout(() => openSearch(), 200)
+  }
+
+  const handleLogin = () => {
+    closeMenu()
+    setTimeout(() => openLogin(), 200)
+  }
+
+  const handleTrack = () => {
+    closeMenu()
+    setTimeout(() => openTrack(), 200)
+  }
 
   return (
     <>
@@ -70,14 +98,13 @@ export function MobileMenu() {
               {openSection === s.key && (
                 <div className="pb-3 pl-3 grid grid-cols-1 gap-1">
                   {s.items.map((i) => (
-                    <a
+                    <button
                       key={i}
-                      href={`#${s.key}`}
-                      onClick={closeMenu}
-                      className="py-1.5 text-sm text-neutral-600 hover:text-red-600"
+                      onClick={() => handleBrandClick(i, s.key)}
+                      className="py-1.5 text-sm text-neutral-600 hover:text-red-600 text-left"
                     >
                       {i}
-                    </a>
+                    </button>
                   ))}
                 </div>
               )}
@@ -99,28 +126,30 @@ export function MobileMenu() {
             </p>
             <div className="grid grid-cols-2 gap-1">
               {brands.slice(0, 12).map((b) => (
-                <a
+                <button
                   key={b.name}
-                  href="#brands"
-                  onClick={closeMenu}
-                  className="py-1 text-xs text-neutral-600 hover:text-red-600"
+                  onClick={() => {
+                    closeMenu()
+                    handleSearch()
+                  }}
+                  className="py-1 text-xs text-neutral-600 hover:text-red-600 text-left"
                 >
                   {b.name}
-                </a>
+                </button>
               ))}
             </div>
           </div>
         </div>
 
         <div className="border-t border-neutral-200 p-4 space-y-2 text-sm">
-          <a href="#" className="flex items-center gap-2 py-1.5 text-neutral-700">
+          <button onClick={handleTrack} className="w-full flex items-center gap-2 py-1.5 text-neutral-700 text-left">
             <Truck className="h-4 w-4 text-red-600" />
             Track My Order
-          </a>
-          <a href="#" className="flex items-center gap-2 py-1.5 text-neutral-700">
+          </button>
+          <button onClick={handleLogin} className="w-full flex items-center gap-2 py-1.5 text-neutral-700 text-left">
             <User className="h-4 w-4 text-red-600" />
             Login / SignUp
-          </a>
+          </button>
           <a href="tel:01934-764333" className="flex items-center gap-2 py-1.5 text-neutral-700">
             <Phone className="h-4 w-4 text-red-600" />
             01934-764333

@@ -51,18 +51,18 @@ export const brands: Brand[] = [
   { name: "West End Watch", logoText: "WEST END" },
 ]
 
-// Watch product images (gender-neutral product photography)
+// Watch product images (gender-neutral product photography) - all URLs verified working
 const watchImages = {
   blue: "https://images.unsplash.com/photo-1524592094714-0f0654e20314?w=600&q=80",
   silver: "https://images.unsplash.com/photo-1524805444758-089113d48a6d?w=600&q=80",
   black: "https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=600&q=80",
   gold: "https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?w=600&q=80",
-  brown: "https://images.unsplash.com/photo-1622434641406-a158ff450dc8?w=600&q=80",
-  green: "https://images.unsplash.com/photo-1639037687665-37e0e07fee13?w=600&q=80",
+  brown: "https://images.unsplash.com/photo-1539874754764-5a96559165b0?w=600&q=80",
+  green: "https://images.unsplash.com/photo-1495704907664-81f74a7efd9b?w=600&q=80",
   red: "https://images.unsplash.com/photo-1619134778706-7015533a6150?w=600&q=80",
   white: "https://images.unsplash.com/photo-1550547660-d9450f859349?w=600&q=80",
   chrono: "https://images.unsplash.com/photo-1587836374828-4dbafa94cf0e?w=600&q=80",
-  skeleton: "https://images.unsplash.com/photo-1606293459337-90a0846b9d6e?w=600&q=80",
+  skeleton: "https://images.unsplash.com/photo-1600857544200-b2f666a9a2ec?w=600&q=80",
 }
 
 export const products: Product[] = [
@@ -190,9 +190,9 @@ export const categories = [
   { title: "Men's Watch", image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=400&q=80", href: "#men" },
   { title: "Ladies Watch", image: "https://images.unsplash.com/photo-1547996160-81dfa63595aa?w=400&q=80", href: "#ladies" },
   { title: "Couple Watch", image: "https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?w=400&q=80", href: "#couple" },
-  { title: "Accessories", image: "https://images.unsplash.com/photo-1612817159949-195b6eb9e31a?w=400&q=80", href: "#accessories" },
+  { title: "Accessories", image: "https://images.unsplash.com/photo-1539874754764-5a96559165b0?w=400&q=80", href: "#accessories" },
   { title: "Gifts", image: "https://images.unsplash.com/photo-1619134778706-7015533a6150?w=400&q=80", href: "#gifts" },
-  { title: "Sale", image: "https://images.unsplash.com/photo-1622434641406-a158ff450dc8?w=400&q=80", href: "#sale" },
+  { title: "Sale", image: "https://images.unsplash.com/photo-1551816230-ef5deaed4a26?w=400&q=80", href: "#sale" },
 ]
 
 export const services = [
