@@ -233,7 +233,7 @@ export const categories = [
 ]
 
 export const services = [
-  { title: "Physical Store", desc: "Visit our Banani showroom", icon: "store" },
+  { title: "Physical Store", desc: "Visit our Mirpur showroom", icon: "store" },
   { title: "Fastest Delivery", desc: "Same-day delivery in Dhaka", icon: "truck" },
   { title: "Sale Service", desc: "After-sales & warranty support", icon: "wrench" },
   { title: "Customer Reviews", desc: "Trusted by 10,000+ customers", icon: "star" },

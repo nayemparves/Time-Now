@@ -55,7 +55,7 @@ export function Footer() {
   const handleLink = (name: string) => {
     toast({
       title: name,
-      description: `${name} page is coming soon. Contact us at 01934-764333 for any queries.`,
+      description: `${name} page is coming soon. Contact us at 01744204287 for any queries.`,
     })
   }
 
@@ -138,8 +138,8 @@ export function Footer() {
             <li className="flex gap-3">
               <MapPin className="h-5 w-5 text-red-600 shrink-0 mt-0.5" />
               <span>
-                N.I. Tower, Level 2, House 01, Road 10, Block E, Banani,
-                Dhaka-1213, Bangladesh
+                Plot 12, Road 3, Block C, Mirpur DOSH,
+                Dhaka-1216, Bangladesh
               </span>
             </li>
             <li className="flex gap-3">
@@ -150,8 +150,8 @@ export function Footer() {
             </li>
             <li className="flex gap-3">
               <Phone className="h-5 w-5 text-red-600 shrink-0 mt-0.5" />
-              <a href="tel:01934-764333" className="hover:text-red-400 transition-colors">
-                01934-764333
+              <a href="tel:01744204287" className="hover:text-red-400 transition-colors">
+                01744204287
               </a>
             </li>
           </ul>

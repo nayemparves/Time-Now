@@ -178,7 +178,7 @@ export function Header() {
             </li>
             <li className="ml-auto pl-4 hidden lg:block">
               <a
-                href="tel:01934-764333"
+                href="tel:01744204287"
                 className="flex items-center gap-2 text-white hover:text-[#DDB87A] transition-colors whitespace-nowrap"
               >
                 <span className="h-7 w-7 rounded-full bg-red-600 flex items-center justify-center">
@@ -186,7 +186,7 @@ export function Header() {
                 </span>
                 <span className="flex flex-col leading-tight text-[11px]">
                   <span className="text-[9px] uppercase tracking-wider text-white/60">Call Us 24/7</span>
-                  <span className="font-bold">01934-764333</span>
+                  <span className="font-bold">01744204287</span>
                 </span>
               </a>
             </li>

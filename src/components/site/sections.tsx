@@ -112,7 +112,7 @@ export function Services() {
     if (title === "Physical Store") {
       toast({
         title: "Visit Our Showroom",
-        description: "N.I. Tower, Level 2, House 01, Road 10, Block E, Banani, Dhaka-1213.",
+        description: "Plot 12, Road 3, Block C, Mirpur DOSH, Dhaka-1216.",
       })
       return
     }

@@ -150,9 +150,9 @@ export function MobileMenu() {
             <User className="h-4 w-4 text-red-600" />
             Login / SignUp
           </button>
-          <a href="tel:01934-764333" className="flex items-center gap-2 py-1.5 text-neutral-700">
+          <a href="tel:01744204287" className="flex items-center gap-2 py-1.5 text-neutral-700">
             <Phone className="h-4 w-4 text-red-600" />
-            01934-764333
+            01744204287
           </a>
           <a href="mailto:info@timenowbd.com" className="flex items-center gap-2 py-1.5 text-neutral-700">
             <Mail className="h-4 w-4 text-red-600" />
