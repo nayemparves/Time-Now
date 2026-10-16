@@ -131,6 +131,43 @@ export type Reviewer = {
   avatar: string
 }
 
+/**
+ * Returns up to `limit` related products for a given product.
+ * Strategy: prefer same brand (excluding current), then fill up with
+ * same category (excluding current and already-included), then any other
+ * products on sale. Always excludes the current product by id.
+ */
+export function getRelatedProducts(product: Product, limit = 4): Product[] {
+  if (!product) return []
+  const sameBrand = products.filter(
+    (p) => p.id !== product.id && p.brand === product.brand
+  )
+  const sameCategory = products.filter(
+    (p) =>
+      p.id !== product.id &&
+      p.brand !== product.brand &&
+      p.category === product.category
+  )
+  const others = products.filter(
+    (p) =>
+      p.id !== product.id &&
+      p.brand !== product.brand &&
+      p.category !== product.category
+  )
+  // Prioritize items with discounts to surface deals first within each bucket
+  const sortByDeal = (a: Product, b: Product) => {
+    const ad = a.oldPrice ? (a.oldPrice - a.price) / a.oldPrice : 0
+    const bd = b.oldPrice ? (b.oldPrice - b.price) / b.oldPrice : 0
+    return bd - ad
+  }
+  const bucket = [
+    ...sameBrand.sort(sortByDeal),
+    ...sameCategory.sort(sortByDeal),
+    ...others.sort(sortByDeal),
+  ]
+  return bucket.slice(0, limit)
+}
+
 // Male reviewer avatars only (per user requirement)
 export const reviews: Reviewer[] = [
   {
